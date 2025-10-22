@@ -45,3 +45,11 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 # react-todo-list
+
+
+Урок 4. Маршрутизация React
+Усложнённое
+
+1) Установить библиотеку react-helmetи react-helmet-async
+2) С их помощью вынести из public/index.html все связанное с google (шрифты, link preconnect) и добавить их в layout.component через HelmetProvider
+2) Стилизовать страницу 404. Прикрепляйте свои варианты скрином к ДЗ. Ждем красивых страничек ^^
