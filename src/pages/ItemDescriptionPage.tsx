@@ -23,7 +23,7 @@ export const ItemDescriptioPage = ({todos}: ComponentProps) => {
 
     return (
         <div className="container">
-            <h1>Item {id}</h1>
+            <h1>{todo?.text}</h1>
         </div>
     )
 }
