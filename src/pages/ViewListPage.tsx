@@ -9,8 +9,8 @@ export const ViewListPage = () => {
         <div className="container">
             <div>Home Page</div>
             {
-                todoList.map((todo: ToDo, index) => {
-                    return (<ListItem todo={todo} key={index}/>)
+                todoList.map((todo: ToDo) => {
+                    return (<ListItem todo={todo} key={todo.id}/>)
                 })
             }
         </div>

@@ -53,3 +53,16 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 1) Установить библиотеку react-helmetи react-helmet-async
 2) С их помощью вынести из public/index.html все связанное с google (шрифты, link preconnect) и добавить их в layout.component через HelmetProvider
 2) Стилизовать страницу 404. Прикрепляйте свои варианты скрином к ДЗ. Ждем красивых страничек ^^
+
+Задание
+
+1) Повторить за уроком 
+Результат необходимо отправить телеграм-боту — залить на github или отправить архивом
+Усложнённое задание
+
+1) Стилизовать приложение по желанию
+2) Установить пакет gh-pages https://www.npmjs.com/package/gh-pages
+3) Опубликовать свое приложение
+4) Ссылку на приложение прикрепить к комментарию домашнего задания
+https://github.com/rafgraph/spa-github-pages
+https://github.com/Velmoren/todo-app/tree/main
