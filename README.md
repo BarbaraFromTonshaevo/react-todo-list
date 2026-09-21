@@ -1,5 +1,7 @@
 # React ToDo List
 
+**English** | [Русский](README.ru.md)
+
 A ToDo app built with React and TypeScript: global state with Redux Toolkit, client-side routing, a light/dark theme switch, and data persisted in `localStorage`.
 
 A training project completed during a React intensive by GloAcademy. Each day of the course added a new technology to the app (see [Development stages](#development-stages)). The UI is in Russian.
