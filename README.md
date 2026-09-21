@@ -4,7 +4,7 @@ Todo-приложение на React + TypeScript с глобальным сос
 
 Учебный проект, выполненный в рамках интенсива по React от GloAcademy. Каждый день интенсива добавлял в приложение новую технологию (см. [Этапы разработки](#этапы-разработки)).
 
-> Демо: пока не опубликовано.
+**[Демо → barbarafromtonshaevo.github.io/react-todo-list](https://barbarafromtonshaevo.github.io/react-todo-list/)**
 
 ## Возможности
 
@@ -30,13 +30,13 @@ Todo-приложение на React + TypeScript с глобальным сос
 Требуется Node.js и npm.
 
 ```bash
-git clone <url-репозитория>
+git clone https://github.com/BarbaraFromTonshaevo/react-todo-list.git
 cd react-todo-list
 npm install
 npm start
 ```
 
-Приложение откроется на [http://localhost:3000](http://localhost:3000).
+Приложение откроется на [http://localhost:3000/react-todo-list](http://localhost:3000/react-todo-list).
 
 ### Скрипты
 
@@ -45,6 +45,7 @@ npm start
 | `npm start` | dev-сервер с hot reload |
 | `npm run build` | production-сборка в папку `build` |
 | `npm test` | запуск тестов в watch-режиме |
+| `npm run deploy` | сборка и публикация на GitHub Pages (ветка `gh-pages`) |
 
 ## Маршруты
 
@@ -77,6 +78,10 @@ src/
 - **Темы.** Цвета описаны в `styles/themes.ts`, текущая тема из Redux передаётся в `ThemeProvider` из styled-components, поэтому компоненты берут цвета из `props.theme`.
 - **Маршрутизация.** `Layout` содержит шапку и `<Outlet />`, вложенные страницы рендерятся внутри него.
 
+## Деплой
+
+Приложение опубликовано на GitHub Pages через пакет `gh-pages`. Так как Pages не знает про клиентские маршруты, для прямых заходов на `/list` и `/list/:id` используется приём [spa-github-pages](https://github.com/rafgraph/spa-github-pages): `public/404.html` перенаправляет на `index.html`, а скрипт в нём восстанавливает путь. У роутера задан `basename` из `homepage`.
+
 ## Этапы разработки
 
 История коммитов повторяет программу интенсива:
@@ -89,8 +94,6 @@ src/
 
 ## Планы
 
-- публикация на GitHub Pages и ссылка на демо;
 - скриншоты в README;
-- стилизация страницы 404;
 - редактирование текста задачи;
 - тесты для слайсов и компонентов.
