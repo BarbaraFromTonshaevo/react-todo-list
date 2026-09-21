@@ -1,39 +1,39 @@
 # React ToDo List
 
-Todo-приложение на React + TypeScript с глобальным состоянием на Redux Toolkit, маршрутизацией, переключением светлой/тёмной темы и сохранением данных в `localStorage`.
+A ToDo app built with React and TypeScript: global state with Redux Toolkit, client-side routing, a light/dark theme switch, and data persisted in `localStorage`.
 
-Учебный проект, выполненный в рамках интенсива по React от GloAcademy. Каждый день интенсива добавлял в приложение новую технологию (см. [Этапы разработки](#этапы-разработки)).
+A training project completed during a React intensive by GloAcademy. Each day of the course added a new technology to the app (see [Development stages](#development-stages)). The UI is in Russian.
 
-**[Демо → barbarafromtonshaevo.github.io/react-todo-list](https://barbarafromtonshaevo.github.io/react-todo-list/)**
+**[Live demo → barbarafromtonshaevo.github.io/react-todo-list](https://barbarafromtonshaevo.github.io/react-todo-list/)**
 
-## Скриншоты
+## Screenshots
 
-| Светлая тема | Тёмная тема |
+| Light theme | Dark theme |
 | --- | --- |
-| ![Светлая тема](docs/light-theme.png) | ![Тёмная тема](docs/dark-theme.png) |
+| ![Light theme](docs/light-theme.png) | ![Dark theme](docs/dark-theme.png) |
 
-## Возможности
+## Features
 
-- добавление, удаление задач и отметка выполненных;
-- выполненные и невыполненные задачи выводятся в отдельных списках;
-- страница со списком всех задач и страница отдельной задачи (`/list/:id`);
-- переключение светлой и тёмной темы;
-- задачи и выбранная тема сохраняются в `localStorage` и переживают перезагрузку страницы;
-- страница 404 для несуществующих маршрутов.
+- add and delete tasks, mark them as done;
+- done and pending tasks are shown in separate lists;
+- a page with all tasks and a page for a single task (`/list/:id`);
+- light and dark theme toggle;
+- tasks and the selected theme are saved to `localStorage` and survive a page reload;
+- a 404 page for unknown routes.
 
-## Стек
+## Tech stack
 
-| Область | Технологии |
+| Area | Technologies |
 | --- | --- |
 | UI | React 19, TypeScript |
-| Состояние | Redux Toolkit, React Redux |
-| Маршрутизация | React Router 7 (`createBrowserRouter`) |
-| Стили | styled-components (динамические темы), SCSS / CSS Modules, styled-normalize |
-| Прочее | uuid, Create React App (react-scripts 5), Testing Library |
+| State | Redux Toolkit, React Redux |
+| Routing | React Router 7 (`createBrowserRouter`) |
+| Styling | styled-components (dynamic themes), SCSS / CSS Modules, styled-normalize |
+| Other | uuid, Create React App (react-scripts 5), Testing Library |
 
-## Запуск локально
+## Getting started
 
-Требуется Node.js и npm.
+Requires Node.js and npm.
 
 ```bash
 git clone https://github.com/BarbaraFromTonshaevo/react-todo-list.git
@@ -42,63 +42,63 @@ npm install
 npm start
 ```
 
-Приложение откроется на [http://localhost:3000/react-todo-list](http://localhost:3000/react-todo-list).
+The app opens at [http://localhost:3000/react-todo-list](http://localhost:3000/react-todo-list).
 
-### Скрипты
+### Scripts
 
-| Команда | Описание |
+| Command | Description |
 | --- | --- |
-| `npm start` | dev-сервер с hot reload |
-| `npm run build` | production-сборка в папку `build` |
-| `npm test` | запуск тестов в watch-режиме |
-| `npm run deploy` | сборка и публикация на GitHub Pages (ветка `gh-pages`) |
+| `npm start` | dev server with hot reload |
+| `npm run build` | production build into the `build` folder |
+| `npm test` | run tests in watch mode |
+| `npm run deploy` | build and publish to GitHub Pages (`gh-pages` branch) |
 
-## Маршруты
+## Routes
 
-| Путь | Страница |
+| Path | Page |
 | --- | --- |
-| `/` | форма добавления и списки задач |
-| `/list` | список всех задач ссылками |
-| `/list/:id` | страница отдельной задачи |
-| `*` | страница 404 |
+| `/` | add form and task lists |
+| `/list` | all tasks as links |
+| `/list/:id` | single task page |
+| `*` | 404 page |
 
-## Структура проекта
+## Project structure
 
 ```
 src/
 ├── components/   # Form, Header, ListItem, ToDoList, ToDoListItem
-├── feature/      # Redux-слайсы: todoList, themeList
-├── helpers/      # работа с localStorage
+├── feature/      # Redux slices: todoList, themeList
+├── helpers/      # localStorage helpers
 ├── layouts/      # Layout: ThemeProvider, GlobalStyle, Header, Outlet
-├── models/       # типы ToDo и Theme
+├── models/       # ToDo and Theme types
 ├── pages/        # ToDoListPage, ViewListPage, ViewListItemPage, 404
-├── styles/       # GlobalStyle и описание тем
-├── router.tsx    # конфигурация маршрутов
-├── store.ts      # Redux store + подписка на сохранение в localStorage
-└── index.tsx     # точка входа
+├── styles/       # GlobalStyle and theme definitions
+├── router.tsx    # route configuration
+├── store.ts      # Redux store + persisting state to localStorage
+└── index.tsx     # entry point
 ```
 
-## Как это устроено
+## How it works
 
-- **Состояние.** Два слайса Redux Toolkit: `todoList` (создание, переключение статуса, удаление) и `themeList` (текущая тема). Store подписан на изменения и записывает состояние в `localStorage`, а при старте берёт его оттуда как `preloadedState`.
-- **Темы.** Цвета описаны в `styles/themes.ts`, текущая тема из Redux передаётся в `ThemeProvider` из styled-components, поэтому компоненты берут цвета из `props.theme`.
-- **Маршрутизация.** `Layout` содержит шапку и `<Outlet />`, вложенные страницы рендерятся внутри него.
+- **State.** Two Redux Toolkit slices: `todoList` (create, toggle status, delete) and `themeList` (current theme). The store subscribes to changes and writes the state to `localStorage`; on startup it reads it back as `preloadedState`.
+- **Themes.** Colors are defined in `styles/themes.ts`. The current theme from Redux is passed to styled-components' `ThemeProvider`, so components read colors from `props.theme`.
+- **Routing.** `Layout` renders the header and an `<Outlet />`; nested pages are rendered inside it.
 
-## Деплой
+## Deployment
 
-Приложение опубликовано на GitHub Pages через пакет `gh-pages`. Так как Pages не знает про клиентские маршруты, для прямых заходов на `/list` и `/list/:id` используется приём [spa-github-pages](https://github.com/rafgraph/spa-github-pages): `public/404.html` перенаправляет на `index.html`, а скрипт в нём восстанавливает путь. У роутера задан `basename` из `homepage`.
+The app is published to GitHub Pages with the `gh-pages` package. Since Pages knows nothing about client-side routes, direct visits to `/list` and `/list/:id` are handled with the [spa-github-pages](https://github.com/rafgraph/spa-github-pages) approach: `public/404.html` redirects to `index.html`, and a script there restores the original path. The router uses a `basename` derived from `homepage`.
 
-## Этапы разработки
+## Development stages
 
-История коммитов повторяет программу интенсива:
+The commit history follows the course program:
 
-1. Основы React: компоненты, состояние, формы
-2. React Routing (два подхода: старый и новый)
+1. React basics: components, state, forms
+2. React Routing (two approaches: old and new)
 3. Redux (Redux Toolkit)
 4. Styled-components
-5. Динамические цветовые темы
+5. Dynamic color themes
 
-## Планы
+## Roadmap
 
-- редактирование текста задачи;
-- тесты для слайсов и компонентов.
+- edit task text;
+- tests for slices and components.
