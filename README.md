@@ -6,6 +6,12 @@ Todo-приложение на React + TypeScript с глобальным сос
 
 **[Демо → barbarafromtonshaevo.github.io/react-todo-list](https://barbarafromtonshaevo.github.io/react-todo-list/)**
 
+## Скриншоты
+
+| Светлая тема | Тёмная тема |
+| --- | --- |
+| ![Светлая тема](docs/light-theme.png) | ![Тёмная тема](docs/dark-theme.png) |
+
 ## Возможности
 
 - добавление, удаление задач и отметка выполненных;
@@ -94,6 +100,5 @@ src/
 
 ## Планы
 
-- скриншоты в README;
 - редактирование текста задачи;
 - тесты для слайсов и компонентов.
