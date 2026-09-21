@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import {
 	FormWrapper,
 	FormBlock,
@@ -11,7 +11,8 @@ import plusIcon from '../../assets/images/plus.png'
 export const Form = (props: { createNewToDo: Function }) => {
 	const [text, setText] = useState<string>('')
 
-	const formSubmit = () => {
+	const formSubmit = (e: FormEvent) => {
+		e.preventDefault()
 		if (text) {
 			props.createNewToDo(text)
 			setText('')
@@ -20,7 +21,7 @@ export const Form = (props: { createNewToDo: Function }) => {
 
 	return (
 		<FormWrapper>
-			<FormBlock action='#' onSubmit={formSubmit}>
+			<FormBlock onSubmit={formSubmit}>
 				<FormLabel>
 					<FormField
 						value={text}

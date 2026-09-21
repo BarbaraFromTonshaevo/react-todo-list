@@ -7,7 +7,7 @@ export const ViewListPage = () => {
     const todoList = useSelector((state: RootState) => state.todoList.todos)
     return(
         <div className="container">
-            <div>Home Page</div>
+            <h1>Все задачи</h1>
             {
                 todoList.map((todo: ToDo) => {
                     return (<ListItem todo={todo} key={todo.id}/>)

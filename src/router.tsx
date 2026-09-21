@@ -22,12 +22,12 @@ export const router = createBrowserRouter([
             {
                 path: '/list/:id',
                 element: <ViewListItemPage />
+            },
+            {
+                path: '*',
+                element: <NotFound />
             }
 
 		]
-	},
-	{
-		path: '*',
-		element: <NotFound />,
 	}
-])
+], { basename: process.env.PUBLIC_URL })

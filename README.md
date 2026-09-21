@@ -1,68 +1,96 @@
-# Getting Started with Create React App
+# React ToDo List
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Todo-приложение на React + TypeScript с глобальным состоянием на Redux Toolkit, маршрутизацией, переключением светлой/тёмной темы и сохранением данных в `localStorage`.
 
-## Available Scripts
+Учебный проект, выполненный в рамках интенсива по React от GloAcademy. Каждый день интенсива добавлял в приложение новую технологию (см. [Этапы разработки](#этапы-разработки)).
 
-In the project directory, you can run:
+> Демо: пока не опубликовано.
 
-### `npm start`
+## Возможности
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- добавление, удаление задач и отметка выполненных;
+- выполненные и невыполненные задачи выводятся в отдельных списках;
+- страница со списком всех задач и страница отдельной задачи (`/list/:id`);
+- переключение светлой и тёмной темы;
+- задачи и выбранная тема сохраняются в `localStorage` и переживают перезагрузку страницы;
+- страница 404 для несуществующих маршрутов.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Стек
 
-### `npm test`
+| Область | Технологии |
+| --- | --- |
+| UI | React 19, TypeScript |
+| Состояние | Redux Toolkit, React Redux |
+| Маршрутизация | React Router 7 (`createBrowserRouter`) |
+| Стили | styled-components (динамические темы), SCSS / CSS Modules, styled-normalize |
+| Прочее | uuid, Create React App (react-scripts 5), Testing Library |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Запуск локально
 
-### `npm run build`
+Требуется Node.js и npm.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone <url-репозитория>
+cd react-todo-list
+npm install
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Приложение откроется на [http://localhost:3000](http://localhost:3000).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Скрипты
 
-### `npm run eject`
+| Команда | Описание |
+| --- | --- |
+| `npm start` | dev-сервер с hot reload |
+| `npm run build` | production-сборка в папку `build` |
+| `npm test` | запуск тестов в watch-режиме |
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Маршруты
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Путь | Страница |
+| --- | --- |
+| `/` | форма добавления и списки задач |
+| `/list` | список всех задач ссылками |
+| `/list/:id` | страница отдельной задачи |
+| `*` | страница 404 |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Структура проекта
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+src/
+├── components/   # Form, Header, ListItem, ToDoList, ToDoListItem
+├── feature/      # Redux-слайсы: todoList, themeList
+├── helpers/      # работа с localStorage
+├── layouts/      # Layout: ThemeProvider, GlobalStyle, Header, Outlet
+├── models/       # типы ToDo и Theme
+├── pages/        # ToDoListPage, ViewListPage, ViewListItemPage, 404
+├── styles/       # GlobalStyle и описание тем
+├── router.tsx    # конфигурация маршрутов
+├── store.ts      # Redux store + подписка на сохранение в localStorage
+└── index.tsx     # точка входа
+```
 
-## Learn More
+## Как это устроено
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Состояние.** Два слайса Redux Toolkit: `todoList` (создание, переключение статуса, удаление) и `themeList` (текущая тема). Store подписан на изменения и записывает состояние в `localStorage`, а при старте берёт его оттуда как `preloadedState`.
+- **Темы.** Цвета описаны в `styles/themes.ts`, текущая тема из Redux передаётся в `ThemeProvider` из styled-components, поэтому компоненты берут цвета из `props.theme`.
+- **Маршрутизация.** `Layout` содержит шапку и `<Outlet />`, вложенные страницы рендерятся внутри него.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-# react-todo-list
+## Этапы разработки
 
+История коммитов повторяет программу интенсива:
 
-Урок 4. Маршрутизация React
-Усложнённое
+1. Основы React: компоненты, состояние, формы
+2. React Routing (два подхода: старый и новый)
+3. Redux (Redux Toolkit)
+4. Styled-components
+5. Динамические цветовые темы
 
-1) Установить библиотеку react-helmetи react-helmet-async
-2) С их помощью вынести из public/index.html все связанное с google (шрифты, link preconnect) и добавить их в layout.component через HelmetProvider
-2) Стилизовать страницу 404. Прикрепляйте свои варианты скрином к ДЗ. Ждем красивых страничек ^^
+## Планы
 
-Задание
-
-1) Повторить за уроком 
-Результат необходимо отправить телеграм-боту — залить на github или отправить архивом
-Усложнённое задание
-
-1) Стилизовать приложение по желанию
-2) Установить пакет gh-pages https://www.npmjs.com/package/gh-pages
-3) Опубликовать свое приложение
-4) Ссылку на приложение прикрепить к комментарию домашнего задания
-https://github.com/rafgraph/spa-github-pages
-https://github.com/Velmoren/todo-app/tree/main
+- публикация на GitHub Pages и ссылка на демо;
+- скриншоты в README;
+- стилизация страницы 404;
+- редактирование текста задачи;
+- тесты для слайсов и компонентов.

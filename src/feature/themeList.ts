@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import { Theme } from '../models/theme'
 import { themes } from '../styles/themes'
 
