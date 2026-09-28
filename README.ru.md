@@ -2,67 +2,69 @@
 
 [English](README.md) | **Русский**
 
-Todo-приложение на React + TypeScript с глобальным состоянием на Redux Toolkit, маршрутизацией, переключением светлой/тёмной темы и сохранением данных в `localStorage`.
+ToDo-приложение на React 19 и TypeScript: состояние на Redux Toolkit, страницы на React Router, светлая и тёмная тема на styled-components, сохранение данных в `localStorage`. Интерфейс на русском.
 
-Учебный проект, выполненный в рамках интенсива по React от GloAcademy. Каждый день интенсива добавлял в приложение новую технологию (см. [Этапы разработки](#этапы-разработки)).
+> 🎓 **Training project** · Интенсив по React от GloAcademy · октябрь 2025. Каждый день интенсива добавлял в приложение одну новую технологию; после него я исправила баги, оформила страницу 404 и настроила GitHub Pages (см. [Что изменено позже](#что-изменено-позже)).
 
-**[Демо → barbarafromtonshaevo.github.io/react-todo-list](https://barbarafromtonshaevo.github.io/react-todo-list/)**
+**Live demo:** https://barbarafromtonshaevo.github.io/react-todo-list/
 
-## Скриншоты
-
-| Светлая тема | Тёмная тема |
-| --- | --- |
-| ![Светлая тема](docs/light-theme.png) | ![Тёмная тема](docs/dark-theme.png) |
+<p>
+  <img src="./screenshots/desktop.webp" alt="Список задач в светлой теме на десктопе, 1440 px" width="68%">
+  <img src="./screenshots/mobile.webp" alt="Список задач в тёмной теме на мобильном, 390 px" width="24%">
+</p>
 
 ## Возможности
 
-- добавление, удаление задач и отметка выполненных;
-- выполненные и невыполненные задачи выводятся в отдельных списках;
-- страница со списком всех задач и страница отдельной задачи (`/list/:id`);
-- переключение светлой и тёмной темы;
-- задачи и выбранная тема сохраняются в `localStorage` и переживают перезагрузку страницы;
-- страница 404 для несуществующих маршрутов.
+- Добавление и удаление задач, отметка о выполнении.
+- Выполненные и невыполненные задачи показаны отдельными списками.
+- Страница со всеми задачами и страница отдельной задачи.
+- Переключение светлой и тёмной темы.
+- Задачи и выбранная тема сохраняются после перезагрузки страницы.
+- Страница 404 для несуществующих адресов и удалённых задач.
 
 ## Стек
 
-| Область | Технологии |
+| Область | Инструменты |
 | --- | --- |
 | UI | React 19, TypeScript |
 | Состояние | Redux Toolkit, React Redux |
 | Маршрутизация | React Router 7 (`createBrowserRouter`) |
-| Стили | styled-components (динамические темы), SCSS / CSS Modules, styled-normalize |
-| Прочее | uuid, Create React App (react-scripts 5), Testing Library |
+| Стили | styled-components (темы), SCSS / CSS Modules, styled-normalize |
+| Сборка | Create React App (react-scripts 5) |
+| Хостинг | GitHub Pages (`gh-pages`) |
 
-## Запуск локально
+## Архитектура
 
-Требуется Node.js и npm.
-
-```bash
-git clone https://github.com/BarbaraFromTonshaevo/react-todo-list.git
-cd react-todo-list
-npm install
-npm start
+```
+Form / кнопки ──► слайсы todoList, themeList ──► store ──► localStorage ("appState")
+                                                   │
+                                                   ▼
+                        Layout (ThemeProvider + Header) ──► <Outlet /> ──► страницы
 ```
 
-Приложение откроется на [http://localhost:3000/react-todo-list](http://localhost:3000/react-todo-list).
+1. [src/feature/todoList.ts](src/feature/todoList.ts) создаёт, переключает и удаляет задачи; [src/feature/themeList.ts](src/feature/themeList.ts) хранит текущую тему.
+2. [src/store.ts](src/store.ts) подписан на изменения и записывает состояние в `localStorage`, а при старте берёт его оттуда как `preloadedState` ([src/helpers/storage.ts](src/helpers/storage.ts)).
+3. [src/layouts/Layout.tsx](src/layouts/Layout.tsx) передаёт тему из Redux в `ThemeProvider` из styled-components, поэтому компоненты берут цвета из `props.theme`. Цвета описаны в [src/styles/themes.ts](src/styles/themes.ts).
+4. [src/router.tsx](src/router.tsx) рендерит все страницы внутри `Layout` через `<Outlet />`.
 
-### Скрипты
-
-| Команда | Описание |
-| --- | --- |
-| `npm start` | dev-сервер с hot reload |
-| `npm run build` | production-сборка в папку `build` |
-| `npm test` | запуск тестов в watch-режиме |
-| `npm run deploy` | сборка и публикация на GitHub Pages (ветка `gh-pages`) |
-
-## Маршруты
+### Маршруты
 
 | Путь | Страница |
 | --- | --- |
 | `/` | форма добавления и списки задач |
-| `/list` | список всех задач ссылками |
-| `/list/:id` | страница отдельной задачи |
+| `/list` | все задачи в виде ссылок |
+| `/list/:id` | страница задачи |
 | `*` | страница 404 |
+
+### Этапы разработки
+
+История коммитов повторяет программу интенсива, одна технология в день:
+
+1. Основы React: компоненты, состояние, формы.
+2. React Router: сначала старый подход, потом `createBrowserRouter`.
+3. Redux Toolkit.
+4. styled-components.
+5. Динамические цветовые темы.
 
 ## Структура проекта
 
@@ -76,31 +78,44 @@ src/
 ├── pages/        # ToDoListPage, ViewListPage, ViewListItemPage, 404
 ├── styles/       # GlobalStyle и описание тем
 ├── router.tsx    # конфигурация маршрутов
-├── store.ts      # Redux store + подписка на сохранение в localStorage
+├── store.ts      # Redux store + сохранение состояния в localStorage
 └── index.tsx     # точка входа
 ```
 
-## Как это устроено
+## Что изменено позже
 
-- **Состояние.** Два слайса Redux Toolkit: `todoList` (создание, переключение статуса, удаление) и `themeList` (текущая тема). Store подписан на изменения и записывает состояние в `localStorage`, а при старте берёт его оттуда как `preloadedState`.
-- **Темы.** Цвета описаны в `styles/themes.ts`, текущая тема из Redux передаётся в `ThemeProvider` из styled-components, поэтому компоненты берут цвета из `props.theme`.
-- **Маршрутизация.** `Layout` содержит шапку и `<Outlet />`, вложенные страницы рендерятся внутри него.
+- **Форма больше не отправляет страницу:** обработчик submit вызывает `preventDefault()`.
+- **Ссылки на задачи открываются внутри приложения:** обычный `<a target="_blank">` в списке задач заменён на `Link` из роутера.
+- **Страница задачи показывает саму задачу** (текст и статус), а не её id.
+- **Оформленная страница 404**, теперь внутри `Layout`, и заголовки страниц на русском.
+- **Настройка GitHub Pages:** `basename` у роутера и редирект для прямых заходов (см. [Деплой](#деплой)), этот README и скриншоты.
+
+## Запуск
+
+Нужны Node.js и npm.
+
+```bash
+npm install
+npm start            # http://localhost:3000/react-todo-list
+```
+
+Другие скрипты:
+
+```bash
+npm run build        # production-сборка в build/
+npm run deploy       # сборка и публикация на GitHub Pages (ветка gh-pages)
+```
 
 ## Деплой
 
-Приложение опубликовано на GitHub Pages через пакет `gh-pages`. Так как Pages не знает про клиентские маршруты, для прямых заходов на `/list` и `/list/:id` используется приём [spa-github-pages](https://github.com/rafgraph/spa-github-pages): `public/404.html` перенаправляет на `index.html`, а скрипт в нём восстанавливает путь. У роутера задан `basename` из `homepage`.
+Приложение опубликовано на GitHub Pages через пакет `gh-pages`. Pages не знает про клиентские маршруты, поэтому для прямых заходов на `/list` и `/list/:id` используется приём [spa-github-pages](https://github.com/rafgraph/spa-github-pages): [public/404.html](public/404.html) перенаправляет на `index.html`, а скрипт в нём восстанавливает исходный путь. `basename` роутера берётся из `homepage` в `package.json`.
 
-## Этапы разработки
+## Известные ограничения
 
-История коммитов повторяет программу интенсива:
+- Шапка не реагирует на тему: её цвет задан жёстко в [Header.module.scss](src/components/Header/Header.module.scss).
+- Подписи в шапке (`ToDo`, `List`, `toggle`) на английском, а остальной интерфейс на русском.
 
-1. Основы React: компоненты, состояние, формы
-2. React Routing (два подхода: старый и новый)
-3. Redux (Redux Toolkit)
-4. Styled-components
-5. Динамические цветовые темы
+## Что бы я улучшила
 
-## Планы
-
-- редактирование текста задачи;
-- тесты для слайсов и компонентов.
+- **Редактирование текста задачи.** Сейчас задачу можно только отметить или удалить.
+- **Тесты для слайсов и компонентов.** Testing Library пришла вместе с Create React App, но тестов так и не написано.
